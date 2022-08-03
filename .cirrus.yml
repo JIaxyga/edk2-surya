@@ -10,7 +10,7 @@ env:
 task:
   name: EDK2 - Xiaomi Redmi Note 10 Pro
   container:
-    image: ubuntu:20.04
+    image: dopaemon/bionic
     cpu: 4
     memory: 8G
 
@@ -21,6 +21,7 @@ task:
     - cd ~/
     - git clone https://github.com/dopaemon/edk2-sweet.git -b main
     - cd edk2-sweet
+    - sudo -s
     - chmod +x build_common.sh
     - chmod +x sweetbuild.sh
     - bash build_common.sh
