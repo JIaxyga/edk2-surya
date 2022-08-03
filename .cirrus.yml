@@ -2,6 +2,9 @@ env:
     CIRRUS_CLONE_DEPTH: 1
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
+    RCLONE: "ENCRYPTED[1d222ccbec54d1e81370371dfb9c8571c5488a1fc7bcdaeb97e71df9e16c3beb97b8fba4296ec3f09278d99302485885]"
+    CONF: "ENCRYPTED[9cfcccdc6ab42766810c433500a7b04b545f2371ae44be9b2313bb04edae21cd2e49a929d61aa0bef18e0c533b0bff18]"
+    RLOCAL: "ENCRYPTED[c569f94afc1bcb78b3f397d6881e83abd1f6757c6270ede44bcff239846a9e6bac14ca0b15f91cd54e5f4859cf349c35]"
 
 task:
   name: EDK2 - Xiaomi Redmi Note 10 Pro
@@ -27,3 +30,9 @@ task:
     - chmod +x sweetbuild.sh
     - bash build_common.sh
     - bash sweetbuild.sh
+  rclone_script:
+    - cd ~/edk2-sweet
+    - mkdir -p "$RLOCAL"
+    - touch "$RLOCAL"/"$RCLONE".conf
+    - echo "$CONF" > "$RLOCAL"/"$RCLONE".conf
+    - "$RCLONE" copy -v sweet_uefi.img cirrus:EDK2/msm-4.14/"$(date +'%d-%m-%Y')"/
