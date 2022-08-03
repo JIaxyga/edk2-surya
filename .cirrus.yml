@@ -32,7 +32,7 @@ task:
     - bash sweetbuild.sh
   rclone_script:
     - cd ~/edk2-sweet
-    - mkdir -p "$RLOCAL"
-    - touch "$RLOCAL"/"$RCLONE".conf
-    - echo "$CONF" > "$RLOCAL"/"$RCLONE".conf
-    - "$RCLONE" copy -v sweet_uefi.img cirrus:EDK2/msm-4.14/"$(date +'%d-%m-%Y')"/
+    - mkdir -p $RLOCAL
+    - touch $RLOCAL/$RCLONE.conf
+    - echo $CONF > $RLOCAL/$RCLONE.conf
+    - $RCLONE copy -v sweet_uefi.img cirrus:EDK2/msm-4.14/"$(date +'%d-%m-%Y')"/
