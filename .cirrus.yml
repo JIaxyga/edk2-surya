@@ -29,6 +29,6 @@ task:
     - mkdir -p ~/.config/$RCLONE
     - touch /root/.config/$RCLONE/$RCLONE.conf
     - touch ~/.config/$RCLONE/$RCLONE.conf
-    - echo $TOKEN > /root/.config/$RCLONE/$RCLONE.conf
-    - echo $TOKEN > ~/.config/$RCLONE/$RCLONE.conf
+    - echo "$TOKEN" > /root/.config/$RCLONE/$RCLONE.conf
+    - echo "$TOKEN" > ~/.config/$RCLONE/$RCLONE.conf
     - $RCLONE copy -v sweet_uefi.img cirrus:EDK2/msm-4.14/"$(date +'%d-%m-%Y')"/
