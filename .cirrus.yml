@@ -1,0 +1,29 @@
+env:
+    CIRRUS_CLONE_DEPTH: 1
+    BUILD_HOSTNAME: "CirrusCI"
+    CIRRUS_WORKING_DIR: "/tmp/ci"
+
+task:
+  name: EDK2 - Xiaomi Redmi Note 10 Pro
+  container:
+    image: ubuntu:20.04
+    cpu: 4
+    memory: 8G
+
+  install_script:
+    - apt-get update
+    - apt-get install -yq build-essential uuid-dev iasl git nasm python3-distutils gcc-aarch64-linux-gnu abootimg python-is-python3
+  build_script:
+    - cd ~/
+    - git clone https://github.com/dopaemon/edk2-sweet.git -b main
+    # - git clone https://github.com/tianocore/edk2.git --single-branch
+    # - git clone https://github.com/tianocore/edk2-platforms.git --single-branch
+    # - cd edk2
+    # - git checkout -b b_edk2-stable202011 edk2-stable202011
+    # - git submodule update --init --recursive
+    # - cd ../
+    - cd edk2-sweet
+    - chmod +x build_common.sh
+    - chmod +x sweetbuild.sh
+    - bash build_common.sh
+    - bash sweetbuild.sh
