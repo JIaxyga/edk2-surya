@@ -3,32 +3,32 @@ env:
     BUILD_HOSTNAME: "CirrusCI"
     CIRRUS_WORKING_DIR: "/tmp/ci"
     RCLONE: "ENCRYPTED[1d222ccbec54d1e81370371dfb9c8571c5488a1fc7bcdaeb97e71df9e16c3beb97b8fba4296ec3f09278d99302485885]"
-    RCLONELOCAL: "ENCRYPTED[4aefdc03af5d17d78adaba110b73a84e3c771681003f7866a10e5ba2c907768978789e50b91cb97091bacf64d2a5d0db]"
-    RCLONECONF: "ENCRYPTED[a35c2fdeca4cc70c287f692c18c4c0f62524ede32e0aae5da30ca1d157fd81ee81858891eb92164f98e289b2ae2e2680]"
     TOKEN: "ENCRYPTED[9cfcccdc6ab42766810c433500a7b04b545f2371ae44be9b2313bb04edae21cd2e49a929d61aa0bef18e0c533b0bff18]"
 
 task:
   name: EDK2 - Xiaomi Redmi Note 10 Pro
   container:
-    image: dopaemon/bionic
+    image: ubuntu:20.04
     cpu: 4
     memory: 8G
 
   install_script:
-    - sudo apt-get update
-    - sudo apt-get install -yq $RCLONE build-essential uuid-dev iasl git nasm python3-distutils gcc-aarch64-linux-gnu abootimg
+    - apt-get update
+    - apt-get install -yq $RCLONE build-essential uuid-dev iasl git nasm python3-distutils gcc-aarch64-linux-gnu abootimg python-is-python3
   build_script:
     - cd ~/
     - git clone https://github.com/dopaemon/edk2-sweet.git -b main
     - cd edk2-sweet
-    - sudo -s
     - chmod +x build_common.sh
     - chmod +x sweetbuild.sh
     - bash build_common.sh
     - bash sweetbuild.sh
   rclone_script:
     - cd ~/edk2-sweet
-    - mkdir -pv $RCLONELOCAL
-    - touch $RCLONECONF
-    - echo $TOKEN > $RCLONECONF
+    - mkdir -p /root/.config/$RCLONE
+    - mkdir -p ~/.config/$RCLONE
+    - touch /root/.config/$RCLONE/$RCLONE.conf
+    - touch ~/.config/$RCLONE/$RCLONE.conf
+    - echo $TOKEN > /root/.config/$RCLONE/$RCLONE.conf
+    - echo $TOKEN > ~/.config/$RCLONE/$RCLONE.conf
     - $RCLONE copy -v sweet_uefi.img cirrus:EDK2/msm-4.14/"$(date +'%d-%m-%Y')"/
