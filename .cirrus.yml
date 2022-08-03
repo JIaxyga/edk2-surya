@@ -15,8 +15,8 @@ task:
     memory: 8G
 
   install_script:
-    - apt-get update
-    - apt-get install -yq $RCLONE build-essential uuid-dev iasl git nasm python3-distutils gcc-aarch64-linux-gnu abootimg python-is-python3
+    - sudo apt-get update
+    - sudo apt-get install -yq $RCLONE build-essential uuid-dev iasl git nasm python3-distutils gcc-aarch64-linux-gnu abootimg python-is-python3
   build_script:
     - cd ~/
     - git clone https://github.com/dopaemon/edk2-sweet.git -b main
