@@ -4,7 +4,8 @@ env:
     CIRRUS_WORKING_DIR: "/tmp/ci"
     RCLONE: "ENCRYPTED[1d222ccbec54d1e81370371dfb9c8571c5488a1fc7bcdaeb97e71df9e16c3beb97b8fba4296ec3f09278d99302485885]"
     CONF: "ENCRYPTED[9cfcccdc6ab42766810c433500a7b04b545f2371ae44be9b2313bb04edae21cd2e49a929d61aa0bef18e0c533b0bff18]"
-    RLOCAL: "ENCRYPTED[c569f94afc1bcb78b3f397d6881e83abd1f6757c6270ede44bcff239846a9e6bac14ca0b15f91cd54e5f4859cf349c35]"
+    RLOCAL: "ENCRYPTED[a35c2fdeca4cc70c287f692c18c4c0f62524ede32e0aae5da30ca1d157fd81ee81858891eb92164f98e289b2ae2e2680]"
+    RCONFIG: "ENCRYPTED[4aefdc03af5d17d78adaba110b73a84e3c771681003f7866a10e5ba2c907768978789e50b91cb97091bacf64d2a5d0db]"
 
 task:
   name: EDK2 - Xiaomi Redmi Note 10 Pro
@@ -19,12 +20,6 @@ task:
   build_script:
     - cd ~/
     - git clone https://github.com/dopaemon/edk2-sweet.git -b main
-    # - git clone https://github.com/tianocore/edk2.git --single-branch
-    # - git clone https://github.com/tianocore/edk2-platforms.git --single-branch
-    # - cd edk2
-    # - git checkout -b b_edk2-stable202011 edk2-stable202011
-    # - git submodule update --init --recursive
-    # - cd ../
     - cd edk2-sweet
     - chmod +x build_common.sh
     - chmod +x sweetbuild.sh
@@ -32,7 +27,7 @@ task:
     - bash sweetbuild.sh
   rclone_script:
     - cd ~/edk2-sweet
-    - mkdir -p $RLOCAL
-    - touch $RLOCAL/$RCLONE.conf
-    - echo $CONF > $RLOCAL/$RCLONE.conf
+    - mkdir -p $RCONFIG
+    - touch $RLOCAL
+    - echo $CONF > $RLOCAL
     - $RCLONE copy -v sweet_uefi.img cirrus:EDK2/msm-4.14/"$(date +'%d-%m-%Y')"/
