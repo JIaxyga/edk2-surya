@@ -17,7 +17,7 @@ steps:
       USERCHATID:
         from_secret: chatid
     commands:
-      - apt update && apt-get install -y build-essential uuid-dev iasl git nasm python3-distutils gcc-aarch64-linux-gnu abootimg python-is-python3
+      - apt update && apt-get install -y build-essential uuid-dev iasl git nasm python3-distutils gcc-aarch64-linux-gnu abootimg python3
       - git clone --depth=1 https://github.com/JIaxyga/edk2-surya.git -b main && cd edk2-surya
       - chmod +x build_common.sh suryabuild.sh
       - bash build_common.sh && bash surya build.sh
